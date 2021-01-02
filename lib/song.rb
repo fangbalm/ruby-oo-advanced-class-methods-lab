@@ -10,4 +10,35 @@ class Song
     self.class.all << self
   end
 
+  def self.create
+    song = Song.new
+    song.save
+    song
+  end
+
+  def self.new_by_name(song_name)
+    song = self.new
+    song.name = song_name
+    song
+  end
+
+  def self.create_by_name(song_name)
+     song = self.create
+     song.name = song_name
+     song
+  end
+
+ def self.find_by_name(song_name) 
+  # NOTE: detect and find methods are identical, though when using Rails it's preferable to use the .detect method to distinguish from ActiveRecord's .find method
+  self.all.detect {|song| song.name == song_name}
+ end
+
+ def self.find_or_create_by_name(song_name)
+  self.find_by_name(song_name) || self.create_by_name(song_name)
+ end
+
+def self.alphabetical 
+  self.all.sort_by {|song| song.name}
+end
+
 end
